@@ -7,6 +7,7 @@ import CartContext from '../../store/cart-context';
 const Cart = (props) => {
 	const cartCtx = useContext(CartContext);
 	const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
+	const hasItems = cartCtx.items.length > 0;
 	const cartItems = (
 		<ul className={styles['cart-items']}>
 			{cartCtx.items.map((item) => (
@@ -26,7 +27,7 @@ const Cart = (props) => {
 				<button className={styles['button--alt']} onClick={props.onHideCart}>
 					Close
 				</button>
-				<button className={styles.button}>Order</button>
+				{hasItems && <button className={styles.button}>Order</button>}
 			</div>
 		</Modal>
 	);
