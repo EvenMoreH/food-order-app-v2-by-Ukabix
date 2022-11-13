@@ -32,7 +32,7 @@ const Checkout = (props) => {
 		const enteredPostalIsValid = !isNotPostal(enteredPostal);
 
 		setFormInputsValidity({
-			name: enteredCityIsValid,
+			name: enteredNameIsValid,
 			street: enteredStreetIsValid,
 			city: enteredCityIsValid,
 			postalCode: enteredPostalIsValid,
@@ -49,24 +49,36 @@ const Checkout = (props) => {
 		}
 		// POST data
 	};
+	const nameControlStyles = `${styles.control} ${formInputsValidity.name ? '' : styles.invalid}`;
+	const streetControlStyles = `${styles.control} ${
+		formInputsValidity.street ? '' : styles.invalid
+	}`;
+	const cityControlStyles = `${styles.control} ${formInputsValidity.city ? '' : styles.invalid}`;
+	const postalControlStyles = `${styles.control} ${
+		formInputsValidity.postalCode ? '' : styles.invalid
+	}`;
 
 	return (
 		<form className={styles.form} onSubmit={confirmHandler}>
-			<div className={styles.control}>
+			<div className={nameControlStyles}>
 				<label htmlFor='name'>Your name</label>
 				<input type='text' id='name' ref={nameInputRef} />
+				{!formInputsValidity.name && <p>Please enter a valid name</p>}
 			</div>
-			<div className={styles.control}>
+			<div className={streetControlStyles}>
 				<label htmlFor='street'>Street</label>
 				<input type='text' id='street' ref={streetInputRef} />
+				{!formInputsValidity.name && <p>Please enter a valid street</p>}
 			</div>
-			<div className={styles.control}>
+			<div className={postalControlStyles}>
 				<label htmlFor='postal'>Postal code</label>
 				<input type='text' id='postal' ref={postalInputRef} />
+				{!formInputsValidity.name && <p>Please enter a valid city</p>}
 			</div>
-			<div className={styles.control}>
+			<div className={cityControlStyles}>
 				<label htmlFor='city'>City</label>
 				<input type='text' id='city' ref={cityInputRef} />
+				{!formInputsValidity.name && <p>Please enter a valid postal code (5chars)</p>}
 			</div>
 			<div className={styles.actions}>
 				<button type='button' onClick={props.onCancel}>
