@@ -75,7 +75,16 @@ const Cart = (props) => {
 		</React.Fragment>
 	);
 	const isSubmittingModalContent = <p>Sending Order Data, please wait!</p>;
-	const didSubmitModalContent = <p>Order successfuly sent</p>;
+	const didSubmitModalContent = (
+		<React.Fragment>
+			<p>Order successfuly sent</p>
+			<div className={styles.actions}>
+				<button className={styles['button']} onClick={props.onHideCart}>
+					Close
+				</button>
+			</div>
+		</React.Fragment>
+	);
 
 	return (
 		<Modal onHideCart={props.onHideCart}>
