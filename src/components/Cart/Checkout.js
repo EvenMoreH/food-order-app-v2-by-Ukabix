@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 
 import styles from './Checkout.module.css';
 
@@ -10,6 +10,14 @@ const Checkout = (props) => {
 	const streetInputRef = useRef();
 	const postalInputRef = useRef();
 	const cityInputRef = useRef();
+
+	// use combined state
+	const [formInputsValidity, setFormInputsValidity] = useState({
+		name: true,
+		street: true,
+		city: true,
+		postalCode: true,
+	});
 
 	const confirmHandler = (event) => {
 		event.preventDefault();
@@ -23,15 +31,23 @@ const Checkout = (props) => {
 		const enteredStreetIsValid = !isEmpty(enteredStreet);
 		const enteredPostalIsValid = !isNotPostal(enteredPostal);
 
+		setFormInputsValidity({
+			name: enteredCityIsValid,
+			street: enteredStreetIsValid,
+			city: enteredCityIsValid,
+			postalCode: enteredPostalIsValid,
+		});
+
 		const formIsValid =
 			enteredNameIsValid &&
 			enteredCityIsValid &&
 			enteredStreetIsValid &&
 			enteredPostalIsValid;
 
-		if (formIsValid) {
-			// submit data
+		if (!formIsValid) {
+			return;
 		}
+		// POST data
 	};
 
 	return (
