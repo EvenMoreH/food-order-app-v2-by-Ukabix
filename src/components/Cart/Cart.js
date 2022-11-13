@@ -34,6 +34,18 @@ const Cart = (props) => {
 	const orderHandler = () => {
 		setIsCheckout(true);
 	};
+	const modalActions = (
+		<div className={styles.actions}>
+			<button className={styles['button--alt']} onClick={props.onHideCart}>
+				Close
+			</button>
+			{hasItems && (
+				<button className={styles.button} onClick={orderHandler}>
+					Order
+				</button>
+			)}
+		</div>
+	);
 
 	return (
 		<Modal onHideCart={props.onHideCart}>
@@ -43,16 +55,7 @@ const Cart = (props) => {
 				<span>{totalAmount}</span>
 			</div>
 			{isCheckout && <Checkout />}
-			<div className={styles.actions}>
-				<button className={styles['button--alt']} onClick={props.onHideCart}>
-					Close
-				</button>
-				{hasItems && (
-					<button className={styles.button} onClick={orderHandler}>
-						Order
-					</button>
-				)}
-			</div>
+			{!isCheckout && modalActions}
 		</Modal>
 	);
 };
