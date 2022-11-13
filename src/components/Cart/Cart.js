@@ -8,6 +8,8 @@ import Checkout from './Checkout';
 
 const Cart = (props) => {
 	const [isCheckout, setIsCheckout] = useState(false);
+	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [didSumbit, setDidSubmit] = useState(false);
 	const cartCtx = useContext(CartContext);
 	const totalAmount = `$${cartCtx.totalAmount.toFixed(2)}`;
 	const hasItems = cartCtx.items.length > 0;
@@ -17,8 +19,9 @@ const Cart = (props) => {
 	const cartItemAddHandler = (item) => {
 		cartCtx.addItem({ ...item, amount: 1 });
 	};
-	const submitOrderHandler = (userData) => {
-		fetch(
+	const submitOrderHandler = async (userData) => {
+		setIsSubmitting(true);
+		await fetch(
 			'https://react-app-v2-b7bcb-default-rtdb.europe-west1.firebasedatabase.app/orders.json',
 			{
 				method: 'POST',
@@ -28,6 +31,8 @@ const Cart = (props) => {
 				}),
 			}
 		);
+		setIsSubmitting(false);
+		setDidSubmit(true);
 	};
 	const cartItems = (
 		<ul className={styles['cart-items']}>
