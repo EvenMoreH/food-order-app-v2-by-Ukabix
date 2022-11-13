@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Card from '../UI/Card';
 import MealItem from './MealItem/MealItem';
 import styles from './AvailableMeals.module.css';
 
 const AvailableMeals = () => {
+	const [meals, setMeals] = useState([]);
 	// implement GET meals
 	// reminder - you should avoid using async in useEffect
 	useEffect(() => {
@@ -20,15 +21,17 @@ const AvailableMeals = () => {
 					id: key,
 					name: responseData[key].name,
 					description: responseData[key].description,
-					price: responseData[key].price,
+					price: +responseData[key].price,
 				});
 			}
+			// force re-render
+			setMeals(loadedMeals);
 		};
 
 		fetchMeals();
 	}, []);
 
-	const mealsList = DUMMY_MEALS.map((meal) => (
+	const mealsList = meals.map((meal) => (
 		<MealItem
 			key={meal.id}
 			id={meal.id}
