@@ -43,7 +43,7 @@ const AvailableMeals = () => {
 		// another approach - good practice to handle promises
 		fetchMeals().catch((error) => {
 			setIsLoading(false);
-			setHttpError(error);
+			setHttpError(error.message);
 		});
 	}, []);
 	// handle loading state
