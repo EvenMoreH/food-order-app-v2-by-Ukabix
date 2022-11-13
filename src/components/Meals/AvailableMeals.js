@@ -6,14 +6,15 @@ import styles from './AvailableMeals.module.css';
 
 const AvailableMeals = () => {
 	const [meals, setMeals] = useState([]);
-	// implement GET meals
+	const [isLoading, setIsLoading] = useState(true);
+
 	// reminder - you should avoid using async in useEffect
 	useEffect(() => {
 		const fetchMeals = async () => {
+			// setIsLoading(true);
 			const response = await fetch(
 				'https://react-app-v2-b7bcb-default-rtdb.europe-west1.firebasedatabase.app/meals.json'
 			);
-			// handle incoming data
 			const responseData = await response.json();
 			const loadedMeals = [];
 			for (const key in responseData) {
@@ -24,13 +25,20 @@ const AvailableMeals = () => {
 					price: +responseData[key].price,
 				});
 			}
-			// force re-render
 			setMeals(loadedMeals);
+			setIsLoading(false);
 		};
 
 		fetchMeals();
 	}, []);
-
+	// handle loading state
+	if (isLoading) {
+		return (
+			<section className={styles.MealsLoading}>
+				<p>Loading, please wait</p>
+			</section>
+		);
+	}
 	const mealsList = meals.map((meal) => (
 		<MealItem
 			key={meal.id}
